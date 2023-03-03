@@ -1,15 +1,15 @@
 import { Box, Toolbar } from "@mui/material"
-import { Navbar, SideBar } from "../components"
+import { NavbarComponent, SideBarComponent } from "../components"
 
 const drawerWidth = 240;
 
-export const MovieLayout = ({ children }) => {
+export const MovieLayout = ({ children, position }) => {
   return (
     <Box sx={{ display: 'flex' }}>
 
-        <Navbar drawerWidth={ drawerWidth } />
+        <NavbarComponent drawerWidth={ drawerWidth } />
 
-        <SideBar drawerWidth={ drawerWidth } />
+        <SideBarComponent drawerWidth={ drawerWidth } position={ position } />
 
         <Box 
             component="main"

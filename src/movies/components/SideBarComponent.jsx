@@ -2,7 +2,7 @@ import { LocalMovies, TurnedInNot } from '@mui/icons-material'
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
 import React from 'react'
 
-export const SideBar = ({ drawerWidth = 240 }) => {
+export const SideBarComponent = ({ drawerWidth = 240, position=1 }) => {
   return (
     <Box 
         component="nav"
@@ -25,7 +25,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                 {
                     ['Movies'].map( text => (
                         <ListItem key={ text } disablePadding>
-                            <ListItemButton>
+                            <ListItemButton selected={position === 1}>
                                 <ListItemIcon>
                                     <LocalMovies />
                                 </ListItemIcon>
