@@ -33,7 +33,7 @@ export const TableComponent = ({ columns, initialRows }) => {
     return (
       <GridToolbarContainer>
         <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-          Add record
+          Agregar nueva
         </Button>
       </GridToolbarContainer>
     );
@@ -98,7 +98,6 @@ export const TableComponent = ({ columns, initialRows }) => {
       width: 100,
       cellClassName: 'actions',
       getActions: ({ id }) => {
-        console.group(id)
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
         if (isInEditMode) {
