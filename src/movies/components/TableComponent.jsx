@@ -1,3 +1,23 @@
+/**
+ * Este código implementa un componente de tabla utilizando el paquete @mui/x-data-grid-pro de Material-UI. 
+ * La tabla contiene una columna adicional de "Acciones", que proporciona opciones para editar, guardar, 
+ * eliminar o cancelar una fila determinada.
+
+La tabla se renderiza utilizando los props columns e initialRows, que definen las columnas y las filas iniciales, 
+respectivamente. El prop columns se modifica agregando una columna adicional de "Acciones".
+
+Se utiliza el hook useEffect para actualizar las filas iniciales cada vez que cambia el prop initialRows.
+
+Se define una función EditToolbar para agregar una nueva fila a la tabla.
+
+El componente DataGridPro se utiliza para renderizar la tabla. Se proporcionan varios props, incluyendo rows, 
+columns, editMode, rowModesModel, onRowModesModelChange, onRowEditStart, onRowEditStop, processRowUpdate, 
+pagination, initialState, pageSizeOptions, slots, y slotProps.
+
+En resumen, este código implementa una tabla con opciones de edición, eliminación, guardado y cancelación 
+utilizando el paquete @mui/x-data-grid-pro.
+ */
+
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
@@ -13,9 +33,58 @@ import {
   GridActionsCellItem,
 } from '@mui/x-data-grid-pro';
 
+import {
+  randomCreatedDate,
+  randomTraderName,
+  randomUpdatedDate,
+  randomId,
+} from '@mui/x-data-grid-generator';
+
 export const TableComponent = ({ columns, initialRows }) => {
 
   
+  columns = [...columns, {
+    field: 'actions',
+    type: 'actions',
+    headerName: 'Acciones',
+    width: 100,
+    cellClassName: 'actions',
+    getActions: ({ id }) => {
+      const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+      if (isInEditMode) {
+        return [
+          <GridActionsCellItem
+            icon={<SaveIcon />}
+            label="Save"
+            onClick={handleSaveClick(id)}
+          />,
+          <GridActionsCellItem
+            icon={<CancelIcon />}
+            label="Cancel"
+            className="textPrimary"
+            onClick={handleCancelClick(id)}
+            color="inherit"
+          />,
+        ];
+      }
+
+      return [
+        <GridActionsCellItem
+          icon={<EditIcon />}
+          label="Edit"
+          className="textPrimary"
+          onClick={handleEditClick(id)}
+          color="inherit"
+        />,
+        <GridActionsCellItem
+          icon={<DeleteIcon />}
+          label="Delete"
+          onClick={handleDeleteClick(id)}
+          color="inherit"
+        />,
+      ];
+    },
+  }]
 
   
   function EditToolbar(props) {
@@ -45,7 +114,7 @@ export const TableComponent = ({ columns, initialRows }) => {
   useEffect(() => {
     setRows(initialRows)
   }, [initialRows])
-
+  
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -90,51 +159,8 @@ export const TableComponent = ({ columns, initialRows }) => {
   };
 
 
-  columns.push(
-    {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Acciones',
-      width: 100,
-      cellClassName: 'actions',
-      getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              icon={<SaveIcon />}
-              label="Save"
-              onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
-
-        return [
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
-        ];
-      },
-    }
-  )
+  
 
 
   return (
@@ -147,6 +173,11 @@ export const TableComponent = ({ columns, initialRows }) => {
         onRowEditStart={handleRowEditStart}
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
+        pagination
+        initialState={{
+          pagination: { paginationModel: { pageSize: 5 } },
+        }}
+        pageSizeOptions={[5, 10, 25]}
         slots={{
           toolbar: EditToolbar,
         }}

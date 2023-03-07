@@ -1,11 +1,19 @@
+/**
+ * El componente LoginPage es responsable de renderizar una interfaz de usuario para el inicio de sesión 
+ * de un usuario y gestionar el estado del formulario de inicio de sesión. Utiliza el almacenamiento global 
+ * de Redux para gestionar el estado de autenticación del usuario y para despachar acciones para iniciar sesión 
+ * en la aplicación. El componente también utiliza el hook useForm para manejar los cambios en los campos del 
+ * formulario y el hook useMemo para calcular el valor de la variable isAuthenticating. Además, 
+ * utiliza componentes de la biblioteca @mui/material para renderizar los campos de entrada 
+ * y el botón de inicio de sesión, así como para mostrar mensajes de error
+ */
+
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Google } from "@mui/icons-material";
-import { Link as RouterLink } from 'react-router-dom';
-import { Alert, Button, Grid, Link, TextField, Typography } from "@mui/material";
+import { Alert, Button, Grid, TextField } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks";
-import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailPassword } from "../../store/auth/thunks";
+import { startLoginWithEmailPassword } from "../../store/auth/thunks";
 
 export const LoginPage = () => {
 
@@ -21,11 +29,6 @@ export const LoginPage = () => {
     const onSubmit = ( event ) => {
         event.preventDefault();
         dispatch( startLoginWithEmailPassword( { email, password } ) )
-    }
-
-    const onGoogleSignIn = ( ) => {
-        console.log('on google sign in')
-        dispatch ( startGoogleSignIn() )
     }
 
   return (

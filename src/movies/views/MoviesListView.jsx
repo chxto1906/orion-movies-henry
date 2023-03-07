@@ -1,3 +1,9 @@
+/**
+ * El código muestra una vista de lista de películas que utiliza un componente de tabla para mostrar información. 
+ * La vista obtiene los datos de la lista de películas del estado global utilizando el hook useSelector de Redux. 
+ * También define las columnas de la tabla y las pasa como una prop al componente de tabla.
+ */
+
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { TableComponent } from '../components/TableComponent';

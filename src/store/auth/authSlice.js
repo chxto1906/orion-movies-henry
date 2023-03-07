@@ -1,3 +1,11 @@
+/**
+ * El código define un slice de Redux llamado authSlice, que tiene un estado inicial que contiene la información 
+ * de autenticación del usuario. El slice tiene tres reducers: login, logout y checkingCredentials. login actualiza 
+ * el estado con la información de inicio de sesión del usuario, logout elimina la información de inicio de sesión 
+ * y establece el estado en not-authenticated. checkingCredentials establece el estado en checking. 
+ * El código también exporta las acciones login, logout y checkingCredentials.
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 export const authSlice = createSlice({
     name: 'auth',
